@@ -1,3 +1,5 @@
+// use core::num;
+
 #[derive(PartialEq, Clone, Copy, Debug)]
 enum ClassYear {
     Senior,
@@ -12,7 +14,7 @@ struct Student {
     gpa: f32,
 }
 
-const OLIN_STUDENTS: [Student; 5] = [
+const OLIN_STUDENTS: [Student; 8] = [
     Student {
         name: "Alice",
         class_year: ClassYear::Senior,
@@ -38,13 +40,64 @@ const OLIN_STUDENTS: [Student; 5] = [
         class_year: ClassYear::Senior,
         gpa: 0.0,
     },
+    Student {
+        name: "Anna",
+        class_year: ClassYear::FirstYear,
+        gpa: 4.0,
+    },
+    Student {
+        name: "Hannah",
+        class_year: ClassYear::FirstYear,
+        gpa: 4.0,
+    },
+    Student {
+        name: "Lorin",
+        class_year: ClassYear::Junior,
+        gpa: 3.6,
+    },
 ];
 
-fn get_average_gpa() -> f32 {}
+/// Calculate average gpa of students. First years don't count.
+fn get_average_gpa() -> f32 {
+    let mut total_gpa: f32 = 0.0;
+    let mut num_students: f32 = 0.0;
+    for student in OLIN_STUDENTS.iter() {
+        if student.class_year != ClassYear::FirstYear {
+            total_gpa += student.gpa;
+            num_students += 1.0;
+        }
+    }
+    total_gpa / num_students
+}
 
-fn get_num_excel_students_for_class(class_year: ClassYear) -> u32 {}
+/// Gets the number of students in selected class that have a gpa above the average
+fn get_num_excel_students_for_class(class_year: ClassYear) -> u32 {
+    let avg_gpa = get_average_gpa();
+    let mut num_students: u32 = 0;
+    for student in OLIN_STUDENTS.iter() {
+        if student.gpa > avg_gpa && student.class_year == class_year {
+            num_students += 1;
+        }
+    }
+    num_students
+}
 
-fn get_best_class() -> ClassYear {}
+/// Gets the class with the most excelling students
+fn get_best_class() -> ClassYear {
+    // Calculate the number of best students
+    let senior_students = get_num_excel_students_for_class(ClassYear::Senior);
+    let junior_students = get_num_excel_students_for_class(ClassYear::Junior);
+    let sophmore_students = get_num_excel_students_for_class(ClassYear::Sophomore);
+
+    // Compares the number of best students
+    if sophmore_students > junior_students && sophmore_students > senior_students {
+        ClassYear::Sophomore
+    } else if junior_students > senior_students {
+        ClassYear::Junior
+    } else {
+        ClassYear::Senior
+    }
+}
 
 // Do not modify below here
 #[cfg(test)]
