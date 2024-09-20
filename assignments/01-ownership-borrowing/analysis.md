@@ -1,0 +1,3 @@
+### Basics.rs
+
+Find_in_string gets a lifetime error because I am trying to return refrence to a local variable. The split_whitespace method returns an iterator over temporary string slices created from the original string slice. Each word produced by this iterator is a temporary reference, existing only within the scope of the function. When the substring is found, the function tries to return a reference to one of these temporary slices. Since slice is tied to the iterator, it will be dropped once the function finishes, resulting in the temporary slice becominng invalid.
