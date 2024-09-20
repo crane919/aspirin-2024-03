@@ -1,19 +1,30 @@
 // Now try and implement a doubly linked version. Give an explanation
 // for why this doesn't work.
 
-struct Node {}
+struct Node {
+    value: i32,
+    next: Link,
+    prev: Link,
+}
 
 type Link = Option<Box<Node>>;
 
-pub struct LinkedStack {}
+pub struct LinkedStack {
+    head: Link,
+}
 
 impl LinkedStack {
     fn new() -> Self {
-        todo!();
+        LinkedStack { head: None }
     }
 
     fn push(&mut self, val: i32) {
-        todo!()
+        let node = Box::new(Node {
+            value: val,
+            next: self.head.take(),
+            prev: None,
+        });
+        self.head = Some(node);
     }
 
     fn pop(&mut self) -> Option<i32> {
