@@ -1,19 +1,62 @@
-fn split_string(string: &str, delimeter: &str) -> Vec<&str> {
-    todo!()
+/// Returns a vector of string slices by splitting string based on delimeter
+pub fn split_string<'a>(string: &'a str, delimeter: & str) -> Vec<&'a str> {
+    string.split(delimeter).filter(|string| !string.is_empty()).collect()
 }
 
 #[derive(PartialEq, Debug)]
-struct Differences {
-    only_in_first: Vec<&str>,
-    only_in_second: Vec<&str>,
+struct Differences<'a> {
+    only_in_first: Vec<&'a str>,
+    only_in_second: Vec<&'a str>,
 }
 
-fn find_differences(first_string: &str, second_string: &str) -> Differences {
-    todo!()
+fn find_differences<'a>(first_string: &'a str, second_string: &'a str) -> Differences<'a> {
+    let first_vector = split_string(first_string, " ");
+    let second_vector = split_string(second_string, " ");
+
+    let  mut final_words = Differences {
+        only_in_first: Vec::new(),
+        only_in_second: Vec::new(),
+    };
+
+    for word in &first_vector{
+        if !second_string.contains(word) {
+            final_words.only_in_first.push(word);
+        }
+        
+    }
+
+    for word in &second_vector{
+        if !first_string.contains(word) {
+            final_words.only_in_second.push(word);
+        }
+        
+    }
+    final_words
 }
 
-fn merge_names(first_name: &str, second_name: &str) -> String {
-    todo!()
+fn merge_names<'a>(first_name: & str, second_name: & str) -> String{
+    let mut final_name = String::new();
+    // if not empty, append first letter of first name
+    // if empty, retu
+    let char_vec_first: Vec<char> = first_name.chars().collect();
+    let char_vec_second: Vec<char> = second_name.chars().collect();
+    
+    let mut index_one = 0;
+    let mut index_two = 0;
+
+
+    if !first_name.is_empty(){
+        final_name.push(char_vec_first[0]);
+    }
+    for letter in &char_vec_first[1..]{
+        if !matches!(letter, 'a' | 'e' | 'i' | 'o' | 'u') {
+            final_name.push(*letter);
+        } else {
+
+        }
+    }
+
+    final_name
 }
 
 #[cfg(test)]
