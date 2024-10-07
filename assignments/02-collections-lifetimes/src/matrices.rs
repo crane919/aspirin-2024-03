@@ -6,18 +6,71 @@ pub enum MatrixError {
 }
 
 fn dot_product_prescriptive(vec1: &Vec<f64>, vec2: &Vec<f64>) -> Result<f64, MatrixError> {
-    todo!()
+    if vec1.is_empty() || vec2.is_empty() {
+        return Err(MatrixError::EmptyVector);
+    }
+    if vec1.len() != vec2.len(){
+        return Err(MatrixError::DimensionMismatch);
+    }
+
+    let mut dot_product: f64 = 0.0;
+    for i in 0..vec1.len() {
+        dot_product += vec1[i]*vec2[i];
+    }
+
+    Ok(dot_product)
 }
 
 fn dot_product_functional(vec1: &Vec<f64>, vec2: &Vec<f64>) -> Result<f64, MatrixError> {
-    todo!()
+    if vec1.is_empty() || vec2.is_empty() {
+        return Err(MatrixError::EmptyVector);
+    }
+    if vec1.len() != vec2.len(){
+        return Err(MatrixError::DimensionMismatch);
+    }
+    Ok(vec1.iter().zip(vec2.iter()).map(|(&x, &y)| x * y).sum())
 }
 
 fn multiply_matrices(
     vec1: &Vec<Vec<f64>>,
     vec2: &Vec<Vec<f64>>,
 ) -> Result<Vec<Vec<f64>>, MatrixError> {
-    todo!()
+    // run checks
+    if vec1.is_empty() || vec2.is_empty() {
+        return Err(MatrixError::EmptyVector);
+    }
+    let vec1_col = vec1.len();
+    let vec2_col = vec2.len();
+    let vec1_row = vec1[0].len();
+    let vec2_row = vec2[0].len();
+    for row in vec1.iter() {
+        if row.len() != vec1_row {
+            return Err(MatrixError::InvalidShape);
+        }
+    }
+    for row in vec2.iter() {
+        if row.len() != vec2_row {
+            return Err(MatrixError::InvalidShape);
+        }
+    }
+
+    if vec1_row != vec2_col {
+        return Err(MatrixError::DimensionMismatch);
+    }
+
+    // Initialize the result matrix
+    let mut final_matrix = vec![vec![0.0; vec2_row]; vec1_col];
+
+    //Preform calculations
+    for i in 0..vec1_col {
+        for j in 0..vec2[0].len() {
+            let vec2_col: Vec<f64> = vec2.iter().map(|row| row[j]).collect();
+            final_matrix[i][j] = dot_product_functional(&vec1[i], &vec2_col)?;
+        }
+    }
+
+    Ok(final_matrix)
+
 }
 
 #[cfg(test)]

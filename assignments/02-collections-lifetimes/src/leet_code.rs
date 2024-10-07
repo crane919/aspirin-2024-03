@@ -1,24 +1,79 @@
-use std::collections::HashMap;
+// use std::collections::HashMap;
 
-fn longest_equal_sequence_prescriptive(sequence) -> i32 {
-    todo!()
+fn longest_equal_sequence_prescriptive<T: PartialEq>(sequence: &Vec<T>) -> i32 {
+    if sequence.is_empty() {
+        return 0;
+    }
+
+    let mut max_length = 1;
+    let mut curr_length = 1;
+    let mut curr_value = &sequence[0];
+
+    for value in &sequence[1..] { 
+        if value == curr_value {
+            curr_length += 1;
+        } else {
+            if curr_length > max_length {
+                max_length = curr_length;
+            }
+            curr_length = 1;
+            curr_value = value; 
+        }
+    }
+
+    if curr_length > max_length {
+        max_length = curr_length;
+    }
+
+    max_length
 }
 
-fn longest_equal_sequence_functional(sequence) -> i32 {
-    todo!()
+fn longest_equal_sequence_functional<T: PartialEq + PartialOrd>(sequence: &Vec<T>) -> i32{
+    if sequence.is_empty() {
+        return 0;
+    }
+    let (max_streak, _) = sequence[0..sequence.len() - 1]
+        .iter()
+        .zip(sequence[1..sequence.len()].iter())
+        .map(|(first, second)| first < second)
+        .fold((1, 1), |(best, cur), equality| {
+            if equality {
+                (best.max(cur + 1), cur + 1)
+            } else {
+                (best, 1)
+            }
+        });
+
+    max_streak
 }
 
-fn is_valid_paranthesis(paranthesis: &str) -> bool {
-    todo!()
+fn is_valid_paranthesis(parenthesis: &str) -> bool {
+    let mut stack = Vec::new();
+    for value in parenthesis.chars() {
+        match value {
+            '(' | '{' | '[' => stack.push(value), 
+            ')' => {
+                if stack.pop() != Some('(') { return false; }
+            },
+            '}' => {
+                if stack.pop() != Some('{') { return false; }
+            },
+            ']' => {
+                if stack.pop() != Some('[') { return false; }
+            },
+            _ => {} // Ignore other characters or handle as needed
+        }
+    }
+    stack.is_empty() // Valid if stack is empty at the end
 }
 
 fn longest_common_substring<(first_str: &str, second_str: &str) -> &str {
     todo!()
 }
 
-fn longest_common_substring_multiple(strings: &[&str]) -> &str {
-    todo!()
-}
+// fn longest_common_substring_multiple(strings: &[&str]) -> &str {
+//     todo!()
+// }
 
 #[cfg(test)]
 mod tests {
