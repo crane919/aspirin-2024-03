@@ -37,6 +37,7 @@ fn main() -> Result<()> {
     let final_lines =
         search::search_lines(input, &args.needle, args.ignore_case, args.invert_match);
 
+    //print the final output
     output::print_output(final_lines, args.color, args.needle);
     Ok(())
 }

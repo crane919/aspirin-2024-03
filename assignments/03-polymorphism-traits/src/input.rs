@@ -33,7 +33,7 @@ impl Input for FileInput {
     }
 }
 
-/// Grab the input from stdin or a file
+/// Grab the input from a file or stdin
 pub fn get_input_dyn(file: Option<PathBuf>) -> Result<Vec<String>> {
     let input: Box<dyn Input> = match file {
         None => Box::new(StandardInput {}),

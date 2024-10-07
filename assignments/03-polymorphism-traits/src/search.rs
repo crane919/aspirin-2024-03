@@ -1,6 +1,6 @@
 use regex::Regex;
 
-/// Search lines for substring
+/// Search lines for substring, check for flags
 pub fn search_lines(
     lines: Vec<String>,
     needle: &str,

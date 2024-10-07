@@ -21,7 +21,7 @@ impl Output for PlainOutput {
 impl Output for ColorOutput {
     fn output(&self, final_lines: Vec<String>) {
         !todo!()
-        // All my clippy warnings are because I decieded not finish this code :(
+        // All my clippy warnings are because I decieded not finish this code :((
     }
 }
 
