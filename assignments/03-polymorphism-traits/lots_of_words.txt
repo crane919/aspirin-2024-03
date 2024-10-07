@@ -1,0 +1,9 @@
+-rw-rw-r-- 1 mcranor mcranor 10524 Oct  2 18:50 Cargo.lock
+-rw-rw-r-- 1 mcranor mcranor   183 Oct  3 21:33 Cargo.toml
+-rw-rw-r-- 1 mcranor mcranor  5979 Oct  3 19:41 README.md
+-rw-rw-r-- 1 mcranor mcranor  3735 Oct  2 18:50 rubric.md
+drwxrwxr-x 2 mcranor mcranor  4096 Oct  2 18:50 src
+drwxrwxr-x 3 mcranor mcranor  4096 Oct  2 18:50 target
+banana boats are cool
+i love bananas
+strawberry
