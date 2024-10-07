@@ -3,6 +3,10 @@ use clap::Parser;
 use colored::Color;
 use std::path::PathBuf;
 
+mod input;
+mod output;
+mod search;
+
 #[derive(Parser, Debug)]
 struct Args {
     #[clap(short, long)]
@@ -24,6 +28,16 @@ struct Args {
 
 fn main() -> Result<()> {
     let args = Args::parse();
-    println!("{:?}", args);
+    // println!("{:?}", args);
+
+    // Grabs input
+    let input = input::get_input_dyn(args.file)?;
+    // println!("{:?}", input);
+
+    let final_lines =
+        search::search_lines(input, &args.needle, args.ignore_case, args.invert_match);
+
+    //print the final output
+    output::print_output(final_lines, args.color, args.needle);
     Ok(())
 }
